@@ -1,0 +1,80 @@
+{
+  "version": "8.15.0",
+  "objects": [
+    {
+      "id": "elk-system-index-monitor-dashboard",
+      "type": "dashboard",
+      "updated_at": "2025-10-28T10:00:00.000Z",
+      "attributes": {
+        "title": "ELK System Index Size & Trend Monitor",
+        "description": "Monitor size and growth of system indices (.kibana, .security, .monitoring, etc.)",
+        "panelsJSON": "[{\"version\":\"8.15.0\",\"gridData\":{\"x\":0,\"y\":0,\"w\":24,\"h\":4,\"i\":\"1\"},\"panelIndex\":\"1\",\"embeddableConfig\":{\"enhancements\":{}},\"panelRefName\":\"panel_0\"},{\"version\":\"8.15.0\",\"gridData\":{\"x\":0,\"y\":4,\"w\":12,\"h\":12,\"i\":\"2\"},\"panelIndex\":\"2\",\"embeddableConfig\":{\"enhancements\":{}},\"panelRefName\":\"panel_1\"},{\"version\":\"8.15.0\",\"gridData\":{\"x\":12,\"y\":4,\"w\":12,\"h\":12,\"i\":\"3\"},\"panelIndex\":\"3\",\"embeddableConfig\":{\"enhancements\":{}},\"panelRefName\":\"panel_2\"},{\"version\":\"8.15.0\",\"gridData\":{\"x\":0,\"y\":16,\"w\":24,\"h\":10,\"i\":\"4\"},\"panelIndex\":\"4\",\"embeddableConfig\":{\"enhancements\":{}},\"panelRefName\":\"panel_3\"},{\"version\":\"8.15.0\",\"gridData\":{\"x\":0,\"y\":26,\"w\":12,\"h\":8,\"i\":\"5\"},\"panelIndex\":\"5\",\"embeddableConfig\":{\"enhancements\":{}},\"panelRefName\":\"panel_4\"}]",
+        "optionsJSON": "{\"darkTheme\":false,\"useMargins\":true,\"hidePanelTitles\":false}",
+        "timeRestore": false,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filter\":[{\"meta\":{\"index\":\"metricbeat-*\",\"negate\":false,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"elasticsearch.index.name\",\"params\":{\"query\":\"^\\\\..*\"}},\"query\":{\"match_phrase\":{\"elasticsearch.index.name\":\"^\\\\..*\"}},\"$state\":{\"store\":\"appState\"}}]}"
+        }
+      }
+    },
+    {
+      "id": "1",
+      "type": "visualization",
+      "attributes": {
+        "title": "Total System Index Size Over Time",
+        "visState": "{\"title\":\"Total System Index Size Over Time\",\"type\":\"line\",\"params\":{\"type\":\"line\",\"grid\":{\"categoryLines\":false},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"defaultYExtents\":false},\"labels\":{\"show\":true,\"filter\":true,\"truncate\":100},\"title\":{}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Size (GB)\"}}],\"seriesParams\":[{\"show\":true,\"type\":\"line\",\"mode\":\"normal\",\"interpolate\":\"linear\",\"drawLinesBetweenPoints\":true,\"showCircles\":true,\"data\":{\"id\":\"1\",\"label\":\"Total Size (GB)\"},\"valueAxis\":\"ValueAxis-1\"}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"elasticsearch.index.stats.total.store.size_in_bytes\",\"customLabel\":\"Total Size (GB)\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"timeRange\":{\"mode\":\"relative\",\"from\":\"now-7d\",\"to\":\"now\"},\"useNormalizedEsInterval\":true,\"scaleMetricValues\":false,\"interval\":\"auto\",\"drop_partials\":false,\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"math\",\"schema\":\"metric\",\"params\":{\"script\":\"params.value / 1024 / 1024 / 1024\"}}]}",
+        "uiStateJSON": "{}",
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"index\":\"metricbeat-*\",\"query\":{\"query\":\"elasticsearch.index.name: /^\\\\..*/\",\"language\":\"kuery\"},\"filter\":[]}"
+        }
+      }
+    },
+    {
+      "id": "2",
+      "type": "visualization",
+      "attributes": {
+        "title": "System Index Size Breakdown",
+        "visState": "{\"title\":\"System Index Size Breakdown\",\"type\":\"pie\",\"params\":{\"type\":\"pie\",\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"isDonut\":true,\"labels\":{\"show\":false,\"values\":true,\"last_level\":true,\"truncate\":100}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"elasticsearch.index.stats.total.store.size_in_bytes\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"elasticsearch.index.name\",\"size\":10,\"order\":\"desc\",\"orderBy\":\"1\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"math\",\"schema\":\"metric\",\"params\":{\"script\":\"params.value / 1024 / 1024 / 1024\"}}]}",
+        "uiStateJSON": "{}",
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"index\":\"metricbeat-*\",\"query\":{\"query\":\"elasticsearch.index.name: /^\\\\..*/\",\"language\":\"kuery\"},\"filter\":[{\"meta\":{\"index\":\"metricbeat-*\",\"alias\":null,\"negate\":false,\"disabled\":false,\"type\":\"exists\",\"key\":\"elasticsearch.index.stats.total.store.size_in_bytes\",\"value\":\"exists\"},\"exists\":{\"field\":\"elasticsearch.index.stats.total.store.size_in_bytes\"},\"$state\":{\"store\":\"appState\"}}]}"
+        }
+      }
+    },
+    {
+      "id": "3",
+      "type": "visualization",
+      "attributes": {
+        "title": "Top 10 Largest System Indices",
+        "visState": "{\"title\":\"Top 10 Largest System Indices\",\"type\":\"histogram\",\"params\":{\"type\":\"histogram\",\"grid\":{\"categoryLines\":false},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"defaultYExtents\":false},\"labels\":{\"show\":true,\"rotate\":75,\"filter\":true,\"truncate\":100},\"title\":{}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Size (GB)\"}}],\"seriesParams\":[{\"show\":true,\"type\":\"bar\",\"mode\":\"normal\",\"data\":{\"id\":\"1\",\"label\":\"Size (GB)\"},\"valueAxis\":\"ValueAxis-1\"}],\"addTooltip\":true,\"addLegend\":false,\"legendPosition\":\"right\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"elasticsearch.index.stats.total.store.size_in_bytes\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"elasticsearch.index.name\",\"size\":10,\"order\":\"desc\",\"orderBy\":\"1\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"math\",\"schema\":\"metric\",\"params\":{\"script\":\"params.value / 1024 / 1024 / 1024\"}}]}",
+        "uiStateJSON": "{}",
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"index\":\"metricbeat-*\",\"query\":{\"query\":\"elasticsearch.index.name: /^\\\\..*/\",\"language\":\"kuery\"},\"filter\":[]}"
+        }
+      }
+    },
+    {
+      "id": "4",
+      "type": "visualization",
+      "attributes": {
+        "title": "Daily System Index Growth",
+        "visState": "{\"title\":\"Daily System Index Growth\",\"type\":\"area\",\"params\":{\"type\":\"area\",\"grid\":{\"categoryLines\":false},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"defaultYExtents\":false},\"labels\":{\"show\":true,\"filter\":true,\"truncate\":100},\"title\":{}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Growth (MB)\"}}],\"seriesParams\":[{\"show\":true,\"type\":\"area\",\"mode\":\"stacked\",\"interpolate\":\"linear\",\"drawLinesBetweenPoints\":true,\"showCircles\":false,\"data\":{\"id\":\"1\",\"label\":\"Daily Growth (MB)\"},\"valueAxis\":\"ValueAxis-1\"}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"elasticsearch.index.stats.total.store.size_in_bytes\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"timeRange\":{\"mode\":\"relative\",\"from\":\"now-30d\",\"to\":\"now\"},\"useNormalizedEsInterval\":true,\"interval\":\"1d\",\"min_doc_count\":1}},{\"id\":\"3\",\"enabled\":true,\"type\":\"derivative\",\"schema\":\"metric\",\"params\":{\"unit\":\"1d\"}},{\"id\":\"4\",\"enabled\":true,\"type\":\"math\",\"schema\":\"metric\",\"params\":{\"script\":\"Math.max(params.value, 0) / 1024 / 1024\"}}]}",
+        "uiStateJSON": "{}",
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"index\":\"metricbeat-*\",\"query\":{\"query\":\"elasticsearch.index.name: /^\\\\..*/\",\"language\":\"kuery\"},\"filter\":[]}"
+        }
+      }
+    },
+    {
+      "id": "5",
+      "type": "visualization",
+      "attributes": {
+        "title": "System Index Stats",
+        "visState": "{\"title\":\"System Index Stats\",\"type\":\"metric\",\"params\":{\"addTooltip\":true,\"addLegend\":false,\"type\":\"metric\",\"metric\":{\"percentageMode\":false,\"useRanges\":false,\"colorSchema\":\"Green to Red\",\"metricColorMode\":\"None\",\"colorsRange\":[{\"from\":0,\"to\":10000}],\"labels\":{\"show\":true},\"invertColors\":false,\"style\":{\"bgFill\":\"#000\",\"bgColor\":false,\"labelColor\":false,\"subText\":\"\",\"fontSize\":60}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{\"customLabel\":\"Total System Indices\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"cardinality\",\"schema\":\"metric\",\"params\":{\"field\":\"elasticsearch.index.name\",\"customLabel\":\"Unique System Indices\"}}]}",
+        "uiStateJSON": "{}",
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"index\":\"metricbeat-*\",\"query\":{\"query\":\"elasticsearch.index.name: /^\\\\..*/\",\"language\":\"kuery\"},\"filter\":[]}"
+        }
+      }
+    }
+  ]
+}
