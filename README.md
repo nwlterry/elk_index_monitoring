@@ -1,19 +1,17 @@
 # elk_index_monitoring
 
-Kibana 8.15 saved-object export for **ELK System Index Size & Trend Monitor**.
+Kibana 8.15 saved objects for **ELK System Index Size & Trend Monitor** (`.kibana`, `.security`, `.monitoring`, other `^\..*` names) from Metricbeat `elasticsearch.index.stats`.
 
-The dashboard tracks size and growth of Elasticsearch system indices (`.kibana`, `.security`, `.monitoring`, and other names matching `^\..*`) from Metricbeat `elasticsearch.index.stats`.
+## Layout
 
-## File
+```
+dashboards/elk-system-index-monitor-dashboard.json
+GROUP.md
+README.md
+```
 
-`elk-system-index-monitor-dashboard` — JSON export of the dashboard plus visualizations:
+Expected index pattern: `metricbeat-*`. Import: **Stack Management → Saved Objects → Import**.
 
-- Total system index size over time
-- Size breakdown (pie)
-- Top 10 largest system indices
-- Daily growth
-- Index count metrics
+---
 
-Expected data view / index pattern: `metricbeat-*`.
-
-Import in Kibana: **Stack Management → Saved Objects → Import**.
+See [GROUP.md](GROUP.md) for sibling repositories. Catalog: https://github.com/nwlterry/nwlterry
